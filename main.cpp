@@ -63,7 +63,7 @@ genesis_node->time = std::time(nullptr);
 
     genesis_node->nodeNumber = 0;
     nodeAddress.push_back(genesis_node);
-    genesis_node->nodeId = '00000000000000000000000000000000';
+    genesis_node->nodeId = "00000000000000000000000000000000";
     genesis_node->referenceNodeId = NULL;
     genesis_node->childReferenceNodeId = NULL;
     genesis_node->genesisReferenceNodeId = genesis_node;
@@ -112,11 +112,18 @@ int main()
 
                 InsertDataInANode(newNode);
 
+                newNode->referenceNodeId = tempParentNode;
+
                 sum_data += newNode->data.value;
                 parent_siblings_sum += newNode->data.value;
                 root_node_value += newNode->data.value;
             } else{
                 //Sibling is being added
+
+                Node *newNode = new Node();
+
+                InsertDataInANode(newNode);
+                newNode->referenceNodeId = parent_node;
 
                 if(sum_data > parent_node->data.value){
                     sum_data = 0;

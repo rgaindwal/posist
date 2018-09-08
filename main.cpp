@@ -33,28 +33,12 @@ class Node
 vector<Node*> nodeAddress;
 
 
-int main()
-{
-    Node *genesis_node = new Node();
-    Node *parent_node = new Node();
-    string genesis_data;
-    int sum_data=0;              // Keep track of when we have to move to the next layer
-    int parent_siblings_sum = 0; // Keep track of parent + parent's sibling values
-    char ans;
-
-    genesis_node->time = std::time(nullptr);
+void InsertDataInANode(Node *genesis_node){
+genesis_node->time = std::time(nullptr);
 //    int tempData;
     float tempValue;
     DataClass* tempData = new DataClass();
     cout<<"Genesis Node "<<endl;
-    /*
-    class DataClass{
-    int ownerId;
-    float value;
-    string ownerName;
-    string hashValue;
-    };
-    */
     int tempId;
     cout<<"Owner Id: ";
     cin>>tempId;
@@ -64,8 +48,6 @@ int main()
     cout<<"Value: ";
     cin>>tempValue;
     if(tempValue<=3){
-    sum_data += tempValue;
-    parent_siblings_sum += tempValue;
     tempData->value =  tempValue;
     }else{
         cout<< endl<<"The value can't be more than 3";
@@ -86,6 +68,20 @@ int main()
     genesis_node->childReferenceNodeId = NULL;
     genesis_node->genesisReferenceNodeId = genesis_node;
 
+}
+
+int main()
+{
+    Node *genesis_node = new Node();
+    Node *parent_node = new Node();
+    string genesis_data;
+    float sum_data=0;              // Keep track of when we have to move to the next layer
+    float parent_siblings_sum = 0; // Keep track of parent + parent's sibling values
+    float root_node_value = 0;
+    char ans;
+
+    //
+    InsertDataInANode(genesis_node);
     parent_node = genesis_node;
 
     do{
@@ -95,10 +91,36 @@ int main()
 
             if(sum_data == 0){
                 //New Layer is being added
-                cout<<"enter
+                int nodeFlag = 0;
+                Node *tempParentNode;
+                do{
+                int nodeNumber;
+                cout<<endl<<"Enter the node who's child you have to add: ";
+                cin>>nodeNumber;
 
+                //TODO: Add the check to not go above the last level
+                if(nodeAddress[nodeNumber]){
+                    tempParentNode = nodeAddress[nodeNumber];
+                    nodeFlag = 1;
+                }
+                else{
+                    cout<<endl<<"Invalid Node number";
+                }
+                }while(!nodeFlag != 1);
+
+                Node *newNode = new Node();
+
+                InsertDataInANode(newNode);
+
+                sum_data += newNode->data.value;
+                parent_siblings_sum += newNode->data.value;
+                root_node_value += newNode->data.value;
             } else{
                 //Sibling is being added
+
+                if(sum_data > parent_node->data.value){
+                    sum_data = 0;
+                }
             }
         }
         else

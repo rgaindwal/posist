@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1536403130 source:c:\users\rgain\desktop\code\posist\main.cpp
+	<iostream>
+	<ctime>
+

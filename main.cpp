@@ -17,7 +17,6 @@ string hashValue;
 class Node
 {
     //TODO: create getter, setteres and make all the data private
-    //Public data
   public:
     std::time_t time;
     DataClass data;
